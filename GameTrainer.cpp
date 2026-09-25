@@ -194,7 +194,7 @@ void GameTrainer::tick() {
 
     if (healthValid) {
         std::scoped_lock lock(mutex_);
-        view_.healthPercent = std::clamp((*capacity - *damage) / *capacity * 100.0f, 0.0f, 100.0f);
+        view_.healthPercent = (std::clamp)((*capacity - *damage) / *capacity * 100.0f, 0.0f, 100.0f);
     }
 
     if (invincible) {
@@ -275,10 +275,10 @@ void GameTrainer::tick() {
         memory_.write<float>(*player + offsets::speedZ, offsets::normalJumpImpulse * static_cast<float>(level));
         const float horizontalSpeed = std::hypot(*speedX, *speedY);
         if (level > 1 && horizontalSpeed >= offsets::minHorizontalSpeed) {
-            const float boostedSpeed = std::max(horizontalSpeed * static_cast<float>(level), offsets::minAirBoostSpeed);
+            const float boostedSpeed = (std::max)(horizontalSpeed * static_cast<float>(level), offsets::minAirBoostSpeed);
             airDirectionX_ = *speedX / horizontalSpeed;
             airDirectionY_ = *speedY / horizontalSpeed;
-            airTargetSpeed_ = std::min(boostedSpeed, offsets::maxHorizontalSpeed);
+            airTargetSpeed_ = (std::min)(boostedSpeed, offsets::maxHorizontalSpeed);
             airBoostActive_ = true;
             airBoostEnd_ = now + std::chrono::milliseconds(offsets::airBoostMs);
         }
@@ -311,7 +311,7 @@ void GameTrainer::tick() {
             fallProtectionStart_ = now;
         }
         const float elapsedMs = std::chrono::duration<float, std::milli>(now - fallProtectionStart_).count();
-        const float interpolation = std::clamp(elapsedMs / static_cast<float>(offsets::softLandingRampMs), 0.0f, 1.0f);
+        const float interpolation = (std::clamp)(elapsedMs / static_cast<float>(offsets::softLandingRampMs), 0.0f, 1.0f);
         const float target = offsets::safeDownwardSpeed + (offsets::softLandingTargetSpeed - offsets::safeDownwardSpeed) * interpolation;
         memory_.write<float>(*player + offsets::speedZ, target);
         if (invincible) {
