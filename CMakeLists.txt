@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.20)
 project(IGI-Offline-Trainer LANGUAGES CXX RC)
 
-set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 if(NOT CMAKE_BUILD_TYPE)
@@ -25,6 +25,10 @@ target_compile_definitions(IGI-Offline-Trainer PRIVATE
     UNICODE
     _UNICODE
 )
+
+if(MSVC)
+    target_compile_options(IGI-Offline-Trainer PRIVATE /utf-8)
+endif()
 
 target_link_libraries(IGI-Offline-Trainer PRIVATE
     d2d1
