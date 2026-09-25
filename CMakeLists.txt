@@ -24,6 +24,7 @@ target_include_directories(IGI-Offline-Trainer PRIVATE
 target_compile_definitions(IGI-Offline-Trainer PRIVATE
     UNICODE
     _UNICODE
+    NOMINMAX  # <-- Prevents Windows.h from defining min/max macros
 )
 
 if(MSVC)
